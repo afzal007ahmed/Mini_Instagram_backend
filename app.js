@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.HOST,
+    origin: true ,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

@@ -19,7 +19,7 @@ const postsController = {
         });
       }
       let response;
-      if (req.files.image) {
+      if (req.files?.image) {
         response = await cloudinary.uploader.upload(req.files.image.tempFilePath , { folder : "posts"} );
       }
 

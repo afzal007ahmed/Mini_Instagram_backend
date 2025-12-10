@@ -17,7 +17,9 @@ io.on('connection' , ( socket ) => {
   socket.on('register' , ({ userId }) => {
     socket.user_id = userId ;
      userSocketIdMap[ userId ] = socket.id ;
-     console.log( userSocketIdMap ) ;
+     socket.emit('register-response' , {
+      message : "Connection established."
+     })
   }) ;
   socket.on('disconnect' , () => {
     delete userSocketIdMap[ socket.user_id ] ;

@@ -1,17 +1,12 @@
 require("dotenv").config();
-const { app } = require("./app");
 const { sequelize } = require("./config/db.config");
 require("./models/index");
-const { Server } = require("socket.io");
-const http = require("http");
-const httpServer = http.createServer(app);
-const io = new Server(httpServer , {
-  cors : {
-    origin : true 
-  }
-}) ; 
+const {app} = require('./app');
+const http = require('http') ;
+const httpServer = http.createServer(app) ;
+const { socketIOSetup } = require("./socket") ; 
+const {io , userSocketIdMap} = socketIOSetup(httpServer);
 
-const userSocketIdMap = {} ;
 
 io.on('connection' , ( socket ) => {
   socket.on('register' , ({ userId }) => {
@@ -38,6 +33,3 @@ async function serverFunction() {
 }
 
 serverFunction();
-
-
-module.exports = { io , userSocketIdMap } ;

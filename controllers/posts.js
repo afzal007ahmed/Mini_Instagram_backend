@@ -1,8 +1,11 @@
-const { io, userSocketIdMap } = require("../index");
+const {  getIO, getUserSocketIdMap } = require("../socket");
 const { cloudinary } = require("../config/cloudinary.config");
 const { posts, users, follows, comments } = require("../models/index");
 const jwt = require('jsonwebtoken')
- 
+const io = getIO() ;
+const userSocketIdMap = getUserSocketIdMap() ;
+
+
 const postsController = {
   create: async (req, res) => {
     try {
@@ -50,11 +53,11 @@ const postsController = {
       }]
     });
   
+    console.log( usersFollowing ) ;
     usersFollowing.forEach(( item ) => {
-      console.log( item.user_d , userSocketIdMap ) ;
-      // io.to(userSocketIdMap[ item.user_id ]).emmit("create-post-response" , {
-      //   message : item.follower.name + " has a new post."
-      // })
+      io.to(userSocketIdMap[ item.user_id ]).emmit("create-post-response" , {
+        message : item.follower.name + " has a new post."
+      })
     })
      
     res.send({

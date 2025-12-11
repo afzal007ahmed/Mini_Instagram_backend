@@ -1,7 +1,7 @@
 const { Server } = require("socket.io");
 
 let io ; 
-let userSocketIdMap = {} ;
+const userSocketIdMap = {} ;
 function socketIOSetup(httpServer) {
   io = new Server(httpServer, {
     cors: {

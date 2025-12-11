@@ -1,3 +1,4 @@
+const { io, userSocketIdMap } = require("../index");
 const { cloudinary } = require("../config/cloudinary.config");
 const { posts, users, follows, comments } = require("../models/index");
 const jwt = require('jsonwebtoken')
@@ -37,6 +38,24 @@ const postsController = {
       }
 
     await posts.create({...obj}) ;
+  
+    const usersFollowing = await follows.findAll({
+      where : {
+        follow_id : userId,
+        status : true 
+      },
+      include : [{
+        model : users ,
+        as : "follower"
+      }]
+    });
+
+    usersFollowing.forEach(( item ) => {
+      io.to(userSocketIdMap[ item.user_id ]).emmit("create-post-response" , {
+        message : item.follower.name + " has a new post."
+      })
+    })
+     
     res.send({
         success : true ,
         error : null 

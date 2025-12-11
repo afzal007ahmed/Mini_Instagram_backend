@@ -38,3 +38,6 @@ async function serverFunction() {
 }
 
 serverFunction();
+
+
+module.exports = { io , userSocketIdMap } ;

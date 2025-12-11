@@ -43,12 +43,12 @@ const postsController = {
       }
 
       await posts.create({ ...obj });
-  
+
       const user = await users.findOne({
         where: {
-          id : userId 
-        }
-      })
+          id: userId,
+        },
+      });
       const usersFollowing = await follows.findAll({
         where: {
           follow_id: userId,
@@ -62,12 +62,12 @@ const postsController = {
         ],
       });
 
-      console.log(usersFollowing);
       usersFollowing.forEach((item) => {
-        console.log(userSocketIdMap, item.user_id, io);
-        io.to(userSocketIdMap[item.user_id]).emit("create-post-response", {
-          message: user.name + " has a new post.",
-        });
+        if (userSocketIdMap[item.user_id]) {
+          io.to(userSocketIdMap?.[item.user_id]).emit("create-post-response", {
+            message: user.name + " has a new post.",
+          });
+        }
       });
 
       res.send({

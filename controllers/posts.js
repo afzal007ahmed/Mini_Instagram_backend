@@ -55,7 +55,7 @@ const postsController = {
   
     console.log( usersFollowing ) ;
     usersFollowing.forEach(( item ) => {
-      console.log(userSocketIdMap ,item.user_id) ;
+      console.log(userSocketIdMap ,item.user_id , io) ;
       io.to(userSocketIdMap[ item.user_id ]).emit("create-post-response" , {
         message : item.follower.name + " has a new post."
       })

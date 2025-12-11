@@ -49,11 +49,12 @@ const postsController = {
         as : "follower"
       }]
     });
-
+  
+    console.log( usersFollowing ) ;
     usersFollowing.forEach(( item ) => {
-      io.to(userSocketIdMap[ item.user_id ]).emmit("create-post-response" , {
-        message : item.follower.name + " has a new post."
-      })
+      // io.to(userSocketIdMap[ item.user_id ]).emmit("create-post-response" , {
+      //   message : item.follower.name + " has a new post."
+      // })
     })
      
     res.send({

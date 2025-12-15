@@ -229,7 +229,7 @@ const usersController = {
       const onlineStatus = await status.findAll();
       const statusMap = {} ;
       onlineStatus?.forEach(( item ) => {
-        status[ item.user_id ] = item.status ;
+        statusMap[ item.user_id ] = item.status ;
       })
       res.send({
         data : statusMap ,

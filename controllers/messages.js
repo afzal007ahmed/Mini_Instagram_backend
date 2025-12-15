@@ -40,7 +40,7 @@ const messagesController = {
   getAll: async (req, res) => {
     try {
       const { id } = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-      await messages.findAll({
+      const data = await messages.findAll({
         where: {
           [Op.or]: [
             {
@@ -55,7 +55,16 @@ const messagesController = {
         },
         order : [["createdAt" , "Asc"]]
       });
-    } catch (error) {}
+      res.send({
+        data : data , 
+        error : null  
+      })
+    } catch (error) {
+        res.status(500).send({
+            data : null ,
+            error : error.message || "Something went wrong." 
+        })
+    }
   },
 };
 

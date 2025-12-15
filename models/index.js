@@ -5,12 +5,14 @@ const { postsModel } = require('./posts');
 const { commentsModel } = require('./comments');
 const { reactionModel } = require('./reaction');
 const { followsModel } = require('./follows');
+const { statusModel } = require('./status');
 
 const users = usersModel( sequelize , DataTypes ) ;
 const posts = postsModel( sequelize , DataTypes ) ;
 const comments = commentsModel( sequelize , DataTypes ) ;
 const reaction = reactionModel( sequelize , DataTypes ) ;
 const follows = followsModel( sequelize , DataTypes ) ;
+const status = statusModel( sequelize , DataTypes ) ;
 
 
 users.hasMany( posts , { foreignKey : 'user_id'}) ;
@@ -27,6 +29,9 @@ users.hasMany( follows , {foreignKey : 'user_id' , as : "FollowersList"}) ;
 users.hasMany( follows , { foreignKey : 'follow_id' , as : "FollowingList"}) ;
 reaction.belongsTo( posts , { foreignKey : 'post_id'}) ;
 posts.hasOne( reaction , { foreignKey : 'post_id'}) ;
+users.hasOne( status , { foreignKey : "user_id" } ) ;
+status.belongsTo( users , { foreignKey : "user_id" } );
+
  
 
 module.exports = {
@@ -34,5 +39,6 @@ module.exports = {
     posts ,
     comments ,
     reaction ,
-    follows
+    follows,
+    status
 }

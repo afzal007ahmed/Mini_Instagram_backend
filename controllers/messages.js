@@ -3,7 +3,7 @@ const { getIO, getUserSocketIdMap } = require("../socket");
 const { messages, users } = require("../models/index");
 const jwt = require("jsonwebtoken");
 
-export const messagesController = {
+ const messagesController = {
   add: async (req, res) => {
     try {
       const { id } = jwt.verify(req.cookies.token, process.env.JWT_SECRET);

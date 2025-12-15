@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
           status: true,
         });
       }
-      socket.emit("register-response", {
+      io.emit("register-response", {
         message: "Connection established.",
       });
     } catch (error) {

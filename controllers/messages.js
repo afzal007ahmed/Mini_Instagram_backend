@@ -1,4 +1,4 @@
-import { getIO, getUserSocketIdMap } from "../socket";
+const { getIO, getUserSocketIdMap } = require("../socket");
 
 const { messages, users } = require("../models/index");
 const jwt = require("jsonwebtoken");

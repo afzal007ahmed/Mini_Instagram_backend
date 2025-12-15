@@ -11,7 +11,7 @@ const jwt = require("jsonwebtoken");
       const userSocketMap = getUserSocketIdMap() ;
       await messages.create({
         from_id: id,
-        to: req.params.id,
+        to_id: req.params.id,
         message: req.body.message,
       });
       const user = await users.findOne({

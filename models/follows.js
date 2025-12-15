@@ -1,31 +1,34 @@
-function followsModel( sequelize , DataTypes ) {
-    const follows = sequelize.define("follows", {
-        user_id : {
-            type : DataTypes.UUID ,
-            references : {
-                model : 'users' ,
-                key : 'id' 
-            }
+function followsModel(sequelize, DataTypes) {
+  const follows = sequelize.define(
+    "follows",
+    {
+      user_id: {
+        type: DataTypes.UUID,
+        references: {
+          model: "users",
+          key: "id",
         },
-        follow_id : {
-            type : DataTypes.UUID ,
-            references : {
-                model : 'users' ,
-                key : 'id' 
-            }
+      },
+      follow_id: {
+        type: DataTypes.UUID,
+        references: {
+          model: "users",
+          key: "id",
         },
-        status : {
-            type : DataTypes.BOOLEAN , 
-            defaultValue : false 
-        }
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      },
+      status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
-   {
-    tableName : 'Follows'
-   }
-)
+    {
+      tableName: "Follows",
+    }
+  );
 
-return follows ; 
+  return follows;
 }
 
-
-module.exports = { followsModel } 
+module.exports = { followsModel };

@@ -6,6 +6,7 @@ const { userRouter } = require("./routes/users");
 const fileupload = require("express-fileupload");
 const { postsRouter } = require("./routes/posts");
 const jwt = require("jsonwebtoken");
+const { messageRouter } = require("./routes/message");
 
 const app = express();
 
@@ -42,5 +43,6 @@ app.use(async (req, res, next) => {
 });
 app.use("/api/users", userRouter);
 app.use("/api/posts", postsRouter);
+app.use("/api/message", messageRouter ) ;
 
 module.exports = { app };

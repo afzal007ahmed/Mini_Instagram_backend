@@ -13,6 +13,8 @@ const statusModel = (sequelize, DataTypes) => {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       status: {
         type: DataTypes.BOOLEAN,
@@ -27,5 +29,4 @@ const statusModel = (sequelize, DataTypes) => {
   return status;
 };
 
-
-module.exports = { statusModel } ;
+module.exports = { statusModel };

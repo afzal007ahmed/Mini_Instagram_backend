@@ -10,5 +10,6 @@ userRouter.get('/:id/followers' , usersController.totalFollowers ) ;
 userRouter.get('/:id/posts' , usersController.getAllPosts);
 userRouter.post('/change/profile' , usersController.changeProfile ) ;
 userRouter.get('/' , usersController.getDetails ) ;
+userRouter.get('/status/all' , usersController.onlineStatus )  ;
 
 module.exports = { userRouter } ;

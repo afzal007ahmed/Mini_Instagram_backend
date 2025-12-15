@@ -5,6 +5,7 @@ const {
   posts,
   comments,
   reaction,
+  status,
 } = require("../models/index");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
@@ -60,22 +61,24 @@ const usersController = {
           }
         );
         if (exist.status) {
-          let postIds = await posts.findAll( { where : {
-            user_id : req.params.id
-          }});
-          postIds = postIds.map((i) => i.id ) ;
+          let postIds = await posts.findAll({
+            where: {
+              user_id: req.params.id,
+            },
+          });
+          postIds = postIds.map((i) => i.id);
           await comments.destroy({
-            where : {
-              user_id : id ,
-              post_id : {[Op.in] : postIds}
-            }
+            where: {
+              user_id: id,
+              post_id: { [Op.in]: postIds },
+            },
           });
 
           await reaction.destroy({
             where: {
               user_id: id,
-            post_id : {[Op.in] : postIds}
-            }
+              post_id: { [Op.in]: postIds },
+            },
           });
         }
       }
@@ -219,6 +222,24 @@ const usersController = {
         data: null,
         error: error.message || "Something went wrong.",
       });
+    }
+  },
+  onlineStatus: async (req, res) => {
+    try {
+      const onlineStatus = await status.findAll();
+      const statusMap = {} ;
+      onlineStatus?.forEach(( item ) => {
+        status[ item.user_id ] = item.status ;
+      })
+      res.send({
+        data : statusMap ,
+        error : null 
+      })
+    } catch (error) {
+      res.status(500).send({
+        data : null ,
+        error : error.message || "Something went wrong."
+      })
     }
   },
 };
